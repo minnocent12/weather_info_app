@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               controller: _cityController,
               decoration: const InputDecoration(
-                labelText: 'Enter City Name',
+                labelText: 'Enter City Name ',
                 border: OutlineInputBorder(),
               ),
             ),
