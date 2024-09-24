@@ -1,3 +1,4 @@
+import 'dart:math'; // Import the math library for generating random numbers
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,12 +36,20 @@ class _MyHomePageState extends State<MyHomePage> {
   String _temperature = '--';
   String _weatherCondition = '--';
 
+  // Function to simulate fetching weather data
   void _fetchWeather() {
-    // For now, we'll simulate fetching weather by using the input text
     setState(() {
       _cityName = _cityController.text;
-      _temperature = '25°C'; // Placeholder temperature
-      _weatherCondition = 'Sunny'; // Placeholder weather condition
+
+      // Generate a random temperature between 15°C and 30°C
+      Random random = Random();
+      int temp = 15 + random.nextInt(16); // (30 - 15 + 1) = 16
+
+      _temperature = '$temp°C';
+
+      // Randomly select a weather condition
+      List<String> conditions = ['Sunny', 'Cloudy', 'Rainy'];
+      _weatherCondition = conditions[random.nextInt(3)];
     });
   }
 
@@ -66,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.amberAccent,
-                backgroundColor: Colors.brown,
+                foregroundColor: const Color.fromARGB(255, 245, 243, 244),
+                backgroundColor: const Color.fromARGB(255, 3, 159, 24),
               ),
               onPressed: _fetchWeather,
               child: const Text('Fetch Weather'),
