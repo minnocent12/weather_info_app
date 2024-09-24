@@ -7,16 +7,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Weather App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Weather App Home Page'),
     );
   }
 }
@@ -31,11 +30,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final TextEditingController _cityController = TextEditingController();
+  String _cityName = '';
+  String _temperature = '--';
+  String _weatherCondition = '--';
 
-  void _incrementCounter() {
+  void _fetchWeather() {
+    // For now, we'll simulate fetching weather by using the input text
     setState(() {
-      _counter++;
+      _cityName = _cityController.text;
+      _temperature = '25°C'; // Placeholder temperature
+      _weatherCondition = 'Sunny'; // Placeholder weather condition
     });
   }
 
@@ -44,25 +49,44 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: const Color.fromARGB(255, 120, 166, 246),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            TextField(
+              controller: _cityController,
+              decoration: const InputDecoration(
+                labelText: 'Enter City Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.amberAccent,
+                backgroundColor: Colors.brown,
+              ),
+              onPressed: _fetchWeather,
+              child: const Text('Fetch Weather'),
+            ),
+            const SizedBox(height: 32),
+            Text(
+              'City: $_cityName',
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'Temperature: $_temperature',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            Text(
+              'Condition: $_weatherCondition',
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
